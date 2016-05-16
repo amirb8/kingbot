@@ -232,7 +232,7 @@ function create_config( )
 	"whitelist",
 	"msg_checks"
     },
-    sudo_users = {110626080,103649648,111020322,0,tonumber(our_id)},--Sudo users
+    sudo_users = {132855224 ,0,tonumber(our_id)},--Sudo users
     moderation = {data = 'data/moderation.json'},
     about_text = [[Teleseed v4
 An advanced administration bot based on TG-CLI written in Lua
@@ -253,8 +253,8 @@ topkecleon
 Vamptacus
 
 Our channels
-@teleseedch [English]
-@iranseed [persian]
+@nones [English]
+@TELEPHONES_channel [persian]
 
 Our website 
 http://teleseed.seedteam.org/
@@ -700,3 +700,26 @@ our_id = 0
 now = os.time()
 math.randomseed(now)
 started = false
+, name)
+      msg = plugin.pre_process(msg)
+    end
+  end
+  return msg
+end
+
+-- Go over enabled plugins patterns.
+function match_plugins(msg)
+  for name, plugin in pairs(plugins) do
+    match_plugin(plugin, name, msg)
+  end
+end
+
+-- Check if plugin is on _config.disabled_plugin_on_chat table
+local function is_plugin_disabled_on_chat(plugin_name, receiver)
+  local disabled_chats = _config.disabled_plugin_on_chat
+  -- Table exists and chat has disabled plugins
+  if disabled_chats and disabled_chats[receiver] then
+    -- Checks if plugin is disabled on this chat
+    for disabled_plugin,disabled in pairs(disabled_chats[receiver]) do
+      if disabled_plugin == plugin_name and disabled then
+        local warning = 
